@@ -3,24 +3,91 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Thanks! | Reliable Neighbor Services</title>
+  <title>Thanks | Reliable Neighbor Services</title>
   <meta name="robots" content="noindex" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Zilla+Slab:wght@500;600;700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Zilla+Slab:wght@600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
   <link rel="icon" href="favicon.ico" sizes="any" />
   <link rel="stylesheet" href="style.css" />
+  <script src="script.js" defer></script>
 </head>
 <body>
-<main>
-  <div class="page-hero" style="min-height:100vh;display:flex;align-items:center">
-    <div class="wrap rise">
-      <a href="index.html" class="brand" style="margin-bottom:24px"><img src="assets/logo-icon.png" alt="Reliable Neighbor Services logo" width="56" height="56" /></a>
-      <h1>Got it. Thanks!</h1>
-      <p>Your quote request came through. We'll reach out soon, usually the same day. Need it faster? Call or text <a href="tel:+13123395365" style="color:var(--gold);font-weight:700">(312) 339-5365</a>.</p>
-      <div class="actions"><a class="btn btn-gold" href="index.html">Back to home</a></div>
+
+<header class="site">
+  <div class="wrap head">
+    <a href="index.html" class="brand">
+      <img src="assets/logo-mark.png" alt="" width="99" height="44" />
+      <span>Reliable Neighbor<small>Services</small></span>
+    </a>
+    <button class="menu-btn" type="button" aria-expanded="false" aria-controls="site-nav">Menu</button>
+    <nav class="main" id="site-nav" aria-label="Main">
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="around-the-house.html">Around the House</a></li>
+        <li><a href="yard-outdoor.html">Yard &amp; Outdoor</a></li>
+        <li><a href="events.html">Events &amp; Cleanouts</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="contact.html" class="btn btn-gold">Free quote</a></li>
+      </ul>
+    </nav>
+    <a class="head-phone" href="tel:+13123395365"><small>Call or text</small>(312) 339-5365</a>
+  </div>
+</header>
+
+<main id="main">
+  <section>
+    <div class="wrap" style="max-width:640px">
+      <h1 style="font-size:clamp(2rem,4vw,2.7rem)">Got it. Thanks!</h1>
+      <p style="margin-top:14px;font-size:1.1rem">Your quote request came through. One of us will get back to you soon, usually the same day.</p>
+      <p class="muted" style="margin-top:10px">Need it faster, or want to add a photo? Call or text <a class="link" href="tel:+13123395365">(312) 339-5365</a>.</p>
+      <div class="actions"><a class="btn btn-navy" href="index.html">Back to home</a></div>
+    </div>
+  </section>
+</main>
+
+<footer class="site">
+  <div class="wrap">
+    <div class="foot-grid">
+      <div>
+        <div class="foot-name">Reliable Neighbor Services</div>
+        <p>Painting, repairs, yard work, hauling and cleanup in Tinley Park, Orland Park and the South Suburbs.</p>
+      </div>
+      <div>
+        <h4>Services</h4>
+        <ul>
+          <li><a href="around-the-house.html">Around the House</a></li>
+          <li><a href="yard-outdoor.html">Yard &amp; Outdoor</a></li>
+          <li><a href="events.html">Events &amp; Cleanouts</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Company</h4>
+        <ul>
+          <li><a href="about.html">About us</a></li>
+          <li><a href="contact.html">Free quote</a></li>
+          <li><a href="contact.html#faq">FAQ</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Contact</h4>
+        <ul>
+          <li><a href="tel:+13123395365">(312) 339-5365</a></li>
+          <li><a href="tel:+17087897014">(708) 789-7014</a></li>
+          <li><a href="mailto:rnservices01@gmail.com">rnservices01@gmail.com</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span>&copy; 2026 Reliable Neighbor Services</span>
+      <span>Tinley Park, IL and nearby towns</span>
     </div>
   </div>
-</main>
+</footer>
+
+<div class="callbar">
+  <a href="tel:+13123395365">Call</a>
+  <a href="sms:+13123395365">Text for a quote</a>
+</div>
 </body>
 </html>
