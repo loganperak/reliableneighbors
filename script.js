@@ -13,9 +13,9 @@ document.addEventListener("DOMContentLoaded", function () {
   // ---- Quote form ----
   // Sends in the background so a hiccup never drops the customer on an error page.
   // If it fails, their answers stay in the form and they get a call/text/email fallback.
-  // Without JavaScript the form still posts normally (Netlify Forms -> thanks.html).
+  // Without JavaScript the form still posts normally to FormSubmit, which redirects to thanks.html.
   var form = document.querySelector("form.quote");
-  if (!form || !window.fetch || !window.FormData || !window.URLSearchParams) return;
+  if (!form || !form.getAttribute("data-ajax") || !window.fetch || !window.FormData) return;
 
   var submit = form.querySelector('button[type="submit"]');
   var status = form.querySelector(".form-status");
@@ -53,22 +53,23 @@ document.addEventListener("DOMContentLoaded", function () {
     e.preventDefault();
     if (sending) return;
     if (!form.checkValidity()) { form.reportValidity(); return; }
-    if (val("bot-field")) return; // honeypot filled: quietly ignore
+    if (val("_honey")) return; // honeypot filled: quietly ignore
 
     sending = true;
     submit.disabled = true;
     submit.textContent = "Sending...";
     status.hidden = true;
 
-    var data = new URLSearchParams(new FormData(form)).toString();
-    fetch("/", {
+    // FormSubmit's AJAX endpoint answers with JSON; only {"success":"true"} means it was emailed.
+    fetch(form.getAttribute("data-ajax"), {
       method: "POST",
-      headers: { "Content-Type": "application/x-www-form-urlencoded" },
-      body: data
+      headers: { "Accept": "application/json" },
+      body: new FormData(form)
     })
-      .then(function (res) {
-        if (!res.ok) throw new Error("HTTP " + res.status);
-        window.location.href = form.getAttribute("action") || "thanks.html";
+      .then(function (res) { return res.json(); })
+      .then(function (json) {
+        if (!json || String(json.success) !== "true") throw new Error((json && json.message) || "Not sent");
+        window.location.href = "thanks.html";
       })
       .catch(function () {
         sending = false;
