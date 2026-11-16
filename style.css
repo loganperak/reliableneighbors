@@ -258,3 +258,13 @@ footer.site li { padding: 3px 0; }
   .callbar a:last-child { background: var(--gold); color: var(--navy); }
   body { padding-bottom: 54px; }
 }
+
+/* Seasonal promo strip (home page) */
+.season { background: var(--navy); color: #fff; padding: 18px 0; }
+.season-row { display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+.season p { margin: 0; max-width: 70ch; }
+.season b { color: var(--gold); }
+
+/* 404 page */
+.notfound ul { margin-top: 18px; }
+.notfound li { padding: 4px 0; }
