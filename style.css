@@ -118,13 +118,61 @@ nav.main a[aria-current="page"] { color: var(--navy); font-weight: 700; text-dec
 .ba-slider .ba-note { margin-top: 12px; text-align: center; }
 
 /* ---------- Our Work gallery ---------- */
-.work-list { display: grid; gap: 44px; }
+.work-stats { display: flex; flex-wrap: wrap; gap: 10px 28px; margin-top: 22px; color: #d8deea; font-size: 0.95rem; }
+.work-stats b { color: var(--gold); font-family: "Zilla Slab", Georgia, serif; font-size: 1.5rem; margin-right: 4px; }
+.gallery { padding-top: 40px; }
+.filters { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 8px; }
+.filters[hidden] { display: none; }
+.filter { border: 1px solid var(--line); background: #fff; border-radius: 999px; padding: 8px 16px; font: inherit; font-weight: 600; font-size: 0.95rem; color: var(--navy); cursor: pointer; }
+.filter:hover { border-color: var(--navy); }
+.filter[aria-pressed="true"] { background: var(--navy); border-color: var(--navy); color: #fff; }
+.filter .n { font-weight: 500; opacity: 0.65; margin-left: 4px; }
+.project { padding: 44px 0; border-bottom: 1px solid var(--line); scroll-margin-top: 90px; }
+.project[hidden] { display: none; }
+.project-head { max-width: 64ch; margin-bottom: 22px; }
+.project .tag { font-size: 0.78rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--green); }
+.project h2 { font-size: clamp(1.5rem, 2.6vw, 1.95rem); margin-top: 6px; }
+.project-head p:not(.tag) { margin-top: 8px; color: var(--soft); }
+.pairs { display: grid; gap: 14px; }
 .pair { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
-.pair figure { margin: 0; }
-.pair img { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; border-radius: 4px; background: var(--paper-2); }
-.pair figcaption { margin-top: 8px; font-weight: 700; font-size: 0.9rem; color: var(--navy); }
-.pair figcaption span { font-weight: 400; color: var(--soft); }
-@media (max-width: 640px) { .pair { grid-template-columns: 1fr; } .work-list { gap: 36px; } }
+.pair figure, .shot { margin: 0; }
+.shots { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 14px; }
+.zoom { position: relative; display: block; width: 100%; padding: 0; border: 0; border-radius: 6px; overflow: hidden; background: var(--paper-2); cursor: zoom-in; }
+.zoom img { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; transition: transform 0.35s ease; }
+.shots .zoom img { aspect-ratio: 3 / 4; }
+.zoom:hover img { transform: scale(1.035); }
+.badge { position: absolute; left: 10px; top: 10px; background: var(--navy); color: #fff; font-size: 0.75rem; font-weight: 700; letter-spacing: 0.03em; padding: 4px 10px; border-radius: 999px; }
+.badge.after { background: var(--green); }
+.badge.during { background: var(--gold); color: var(--navy); }
+.filter-empty { padding: 40px 0; color: var(--soft); }
+.filter-empty .link { background: none; border: 0; padding: 0; font: inherit; cursor: pointer; }
+@media (max-width: 640px) {
+  .pair { grid-template-columns: 1fr 1fr; gap: 8px; }
+  .shots { grid-template-columns: 1fr 1fr; gap: 8px; }
+  .badge { left: 6px; top: 6px; font-size: 0.7rem; padding: 3px 8px; }
+  .project { padding: 34px 0; }
+}
+
+/* Photo viewer (Our Work) */
+.lightbox { border: 0; padding: 0; margin: 0; width: 100vw; height: 100vh; max-width: none; max-height: none; background: transparent; color: #fff; }
+.lightbox::backdrop { background: rgba(10, 16, 32, 0.94); }
+.lb-inner { display: grid; grid-template-rows: auto 1fr auto; height: 100%; padding: 14px 16px 18px; }
+.lb-top { display: flex; justify-content: space-between; align-items: center; gap: 16px; }
+.lb-title { font-family: "Zilla Slab", Georgia, serif; font-weight: 700; font-size: 1.15rem; }
+.lb-stage { position: relative; display: flex; align-items: center; justify-content: center; min-height: 0; padding: 12px 0; }
+.lb-stage img { max-width: 100%; max-height: 100%; object-fit: contain; border-radius: 4px; }
+.lb-btn { width: 46px; height: 46px; border-radius: 50%; border: 0; background: rgba(255, 255, 255, 0.92); color: var(--navy); font-size: 1.8rem; line-height: 1; padding: 0 0 4px; cursor: pointer; display: grid; place-items: center; flex-shrink: 0; }
+.lb-btn:hover { background: var(--gold); }
+.lb-prev, .lb-next { position: absolute; top: 50%; transform: translateY(-50%); }
+.lb-prev { left: 4px; }
+.lb-next { right: 4px; }
+.lb-caption { text-align: center; color: #d8deea; font-size: 0.95rem; }
+.lb-count { font-weight: 700; color: #fff; margin-right: 6px; }
+
+/* About: crew photo */
+.crew-photo { margin: 0 0 40px; }
+.crew-photo img { width: 100%; aspect-ratio: 16 / 9; object-fit: cover; object-position: 50% 60%; border-radius: 6px; }
+.crew-photo figcaption { margin-top: 8px; font-size: 0.9rem; color: var(--soft); }
 
 /* ---------- Sub-page header ---------- */
 .page-hero { background: var(--navy); color: #fff; padding: 52px 0 48px; }

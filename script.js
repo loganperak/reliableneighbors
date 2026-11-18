@@ -44,6 +44,84 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   }
 
+  // ---- Our Work: project filters ----
+  var filterBar = document.querySelector(".filters");
+  if (filterBar) {
+    var filterBtns = filterBar.querySelectorAll(".filter");
+    var projects = document.querySelectorAll(".project");
+    var empty = document.querySelector(".filter-empty");
+    var applyFilter = function (cat) {
+      var shown = 0;
+      for (var b = 0; b < filterBtns.length; b++) {
+        filterBtns[b].setAttribute("aria-pressed", filterBtns[b].getAttribute("data-filter") === cat ? "true" : "false");
+      }
+      for (var p = 0; p < projects.length; p++) {
+        var on = cat === "all" || projects[p].getAttribute("data-cat") === cat;
+        projects[p].hidden = !on;
+        if (on) shown++;
+      }
+      if (empty) empty.hidden = shown > 0;
+    };
+    filterBar.hidden = false;
+    filterBar.addEventListener("click", function (e) {
+      var btn = e.target.closest(".filter");
+      if (btn) applyFilter(btn.getAttribute("data-filter"));
+    });
+    var reset = document.querySelector(".filter-reset");
+    if (reset) reset.addEventListener("click", function () { applyFilter("all"); });
+  }
+
+  // ---- Our Work: full-size photo viewer ----
+  // Arrows step through the photos of the project you opened. Esc or the X closes it.
+  var lb = document.querySelector(".lightbox");
+  if (lb && typeof lb.showModal === "function") {
+    var lbImg = lb.querySelector(".lb-stage img");
+    var lbTitle = lb.querySelector(".lb-title");
+    var lbCount = lb.querySelector(".lb-count");
+    var lbAlt = lb.querySelector(".lb-alt");
+    var set = [];
+    var at = 0;
+    var render = function () {
+      var src = set[at];
+      lbImg.src = src.getAttribute("src");
+      lbImg.alt = src.alt;
+      lbCount.textContent = (at + 1) + " / " + set.length;
+      var badge = src.parentNode.querySelector(".badge");
+      lbAlt.textContent = (badge ? badge.textContent + " · " : "") + src.alt;
+      var many = set.length > 1;
+      lb.querySelector(".lb-prev").hidden = !many;
+      lb.querySelector(".lb-next").hidden = !many;
+    };
+    var step = function (d) { at = (at + d + set.length) % set.length; render(); };
+    document.addEventListener("click", function (e) {
+      var z = e.target.closest(".zoom");
+      if (!z) return;
+      e.preventDefault();
+      var project = z.closest(".project");
+      set = Array.prototype.slice.call(project.querySelectorAll(".zoom img"));
+      at = set.indexOf(z.querySelector("img"));
+      lbTitle.textContent = project.querySelector("h2").textContent;
+      render();
+      lb.showModal();
+    });
+    lb.querySelector(".lb-prev").addEventListener("click", function () { step(-1); });
+    lb.querySelector(".lb-next").addEventListener("click", function () { step(1); });
+    lb.querySelector(".lb-close").addEventListener("click", function () { lb.close(); });
+    lb.addEventListener("click", function (e) { if (e.target === lb || e.target.classList.contains("lb-stage")) lb.close(); });
+    lb.addEventListener("keydown", function (e) {
+      if (e.key === "ArrowLeft") step(-1);
+      if (e.key === "ArrowRight") step(1);
+    });
+    var touchX = null;
+    lb.addEventListener("touchstart", function (e) { touchX = e.touches[0].clientX; }, { passive: true });
+    lb.addEventListener("touchend", function (e) {
+      if (touchX === null) return;
+      var dx = e.changedTouches[0].clientX - touchX;
+      if (Math.abs(dx) > 40 && set.length > 1) step(dx < 0 ? 1 : -1);
+      touchX = null;
+    });
+  }
+
   // ---- Quote form ----
   // Sends in the background so a hiccup never drops the customer on an error page.
   // If it fails, their answers stay in the form and they get a call/text/email fallback.
