@@ -10,6 +10,40 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   }
 
+  // ---- Before/after slider (home page) ----
+  // Without JavaScript only the first pair shows, so nothing ever looks broken.
+  var slider = document.querySelector(".ba-slider");
+  if (slider) {
+    var slides = slider.querySelectorAll(".ba-slide");
+    var controls = slider.querySelector(".ba-controls");
+    var count = slider.querySelector(".ba-count");
+    var current = 0;
+    var show = function (i) {
+      current = (i + slides.length) % slides.length;
+      for (var s = 0; s < slides.length; s++) slides[s].hidden = s !== current;
+      count.textContent = (current + 1) + " / " + slides.length;
+    };
+    if (slides.length > 1 && controls) {
+      controls.hidden = false;
+      slider.querySelector(".ba-prev").addEventListener("click", function () { show(current - 1); });
+      slider.querySelector(".ba-next").addEventListener("click", function () { show(current + 1); });
+      // Load the other photos once the page is up so arrows switch instantly.
+      window.addEventListener("load", function () {
+        var imgs = slider.querySelectorAll("img");
+        for (var k = 0; k < imgs.length; k++) imgs[k].loading = "eager";
+      });
+      // Swipe on phones.
+      var startX = null;
+      slider.addEventListener("touchstart", function (e) { startX = e.touches[0].clientX; }, { passive: true });
+      slider.addEventListener("touchend", function (e) {
+        if (startX === null) return;
+        var dx = e.changedTouches[0].clientX - startX;
+        if (Math.abs(dx) > 40) show(current + (dx < 0 ? 1 : -1));
+        startX = null;
+      });
+    }
+  }
+
   // ---- Quote form ----
   // Sends in the background so a hiccup never drops the customer on an error page.
   // If it fails, their answers stay in the form and they get a call/text/email fallback.
