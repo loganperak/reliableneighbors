@@ -69,7 +69,7 @@ document.addEventListener("DOMContentLoaded", function () {
       "Town: " + val("town") + "\n" +
       "Service: " + val("service") + "\n\n" +
       val("details");
-    return "mailto:rnservices01@gmail.com?subject=" + encodeURIComponent("Quote request - " + val("name")) +
+    return "mailto:rnservices101@gmail.com?subject=" + encodeURIComponent("Quote request - " + val("name")) +
       "&body=" + encodeURIComponent(body);
   }
 
