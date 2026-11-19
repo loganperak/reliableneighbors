@@ -1,4 +1,22 @@
+// Opens a new Gmail message with the address (and optional subject/body) already filled in.
+function gmailHref(to, subject, body) {
+  var url = "https://mail.google.com/mail/?view=cm&fs=1&to=" + encodeURIComponent(to);
+  if (subject) url += "&su=" + encodeURIComponent(subject);
+  if (body) url += "&body=" + encodeURIComponent(body);
+  return url;
+}
+
 document.addEventListener("DOMContentLoaded", function () {
+  // ---- Email links -> Gmail compose ----
+  // The HTML keeps plain mailto: links so email still works if scripts are blocked.
+  var mailLinks = document.querySelectorAll('a[href^="mailto:"]');
+  for (var ml = 0; ml < mailLinks.length; ml++) {
+    var to = mailLinks[ml].getAttribute("href").replace(/^mailto:/, "").split("?")[0];
+    mailLinks[ml].setAttribute("href", gmailHref(to));
+    mailLinks[ml].setAttribute("target", "_blank");
+    mailLinks[ml].setAttribute("rel", "noopener");
+  }
+
   // ---- Mobile menu ----
   var btn = document.querySelector(".menu-btn");
   var nav = document.querySelector("nav.main");
@@ -147,15 +165,14 @@ document.addEventListener("DOMContentLoaded", function () {
       "Town: " + val("town") + "\n" +
       "Service: " + val("service") + "\n\n" +
       val("details");
-    return "mailto:rnservices101@gmail.com?subject=" + encodeURIComponent("Quote request - " + val("name")) +
-      "&body=" + encodeURIComponent(body);
+    return gmailHref("rnservices101@gmail.com", "Quote request - " + val("name"), body);
   }
 
   function showError() {
     status.innerHTML =
       "Sorry, that didn't go through. Your info is still filled in. " +
       'Try again, or reach us directly: call or text <a href="tel:+13123395365">(312) 339-5365</a>, ' +
-      'or <a class="mail-fallback" href="#">email this request</a>.';
+      'or <a class="mail-fallback" href="#" target="_blank" rel="noopener">email this request</a>.';
     status.querySelector(".mail-fallback").setAttribute("href", emailFallbackHref());
     status.hidden = false;
     status.focus();
